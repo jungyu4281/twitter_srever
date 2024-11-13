@@ -25,7 +25,6 @@ export async function getTweet(req,res){
 
 // 트윗하기
 // POST 방식 (글을 보내는것이기 때문에)
-// http://127.0.0.1:8080/tweets
 export async function createTweet(req,res,next){
     const { username, name, text } =req.body
     const tweet = await tweetRepository.create(username,name,text)
@@ -38,12 +37,15 @@ export async function createTweet(req,res,next){
 export async function updateTweet(req, res) {
     const id = req.params.id
     const text = req.body.text
-    const tweet = await tweetRepository.update(id, text)
-    if (tweet) {
-        res.status(200).json(tweet)
-    } else {
+    const tweet = await tweetRepository.getById(id)
+    if(!tweet){
         res.status(404).json({ message: `${id}의 트윗이 없습니다.` })
     }
+    if(tweet.userId !== req.userId){
+        return res.sendStatus(403)
+    }
+    const updated = await tweetRepository.update(id, text)
+    res.status(200).json(updated)
 }
 
 
@@ -51,6 +53,16 @@ export async function updateTweet(req, res) {
 // DELETE (삭제하기 위해)
 export async function deleteTweet(req, res, next){
     const id = req.params.id 
+    const tweet = await tweetRepository.getById(id)
+    if(!tweet){
+        res.status(404).json({ message: `${id}의 트윗이 없습니다.` })
+    }
+    if(tweet.userId !== req.userId){
+        return res.sendStatus(403)
+    }
+    const updated = await tweetRepository.update(id, text)
+    res.status(200).json(updated)
+
     await tweetRepository.remove(id)
     res.sendStatus(204)
 }

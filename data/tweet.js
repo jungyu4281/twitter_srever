@@ -2,29 +2,23 @@
 let tweets =[
     {
         id:'1',
-        name:'김사과',
-        username:'apple',
+        userId: '1',
         text: '안녕하세요',
-        createdAt: Date.now().toString(),
-        url:'https://img.freepik.com/premium-photo/young-asian-man-her-clean-face-with-fresh-healthy-skin-ai-generated_145713-6656.jpg'
+        createdAt: Date.now().toString()
     },
 
     {
         id:'2',
-        name:'반하나',
-        username:'banana',
+        userId: '2',
         text: '반갑습니다',
-        createdAt: Date.now().toString(),
-        url:'https://cdn.goenhance.ai/user/2024/07/12/6df8872f-c15e-442f-a4df-caa520c34c77_1.jpg'
+        createdAt: Date.now().toString()
     },
 
     {
         id:'3',
-        name:'오렌지',
-        username:'orange',
+        userId: '1',
         text: '첫 트윗!',
-        createdAt: Date.now().toString(),
-        url:'https://image.fmkorea.com/files/attach/new3/20230304/486616/5188209953/5548553027/c61967d378b4197162c61fada55ac76d.jpg',
+        createdAt: Date.now().toString()
     }
 ]
 
