@@ -25,6 +25,7 @@ let users = [
     },
 ]
 
+// 회원가입
 export async function createUser(username,password,name,email){
     const user = {
         id:'4',
@@ -38,7 +39,9 @@ export async function createUser(username,password,name,email){
     return user
 }
 
-export async function login(username){
+
+// 로그인
+export async function findByUsername(username){
     const user = users.find((user)=> user.username === username)
     return user
 }
