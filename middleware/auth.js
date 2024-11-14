@@ -14,7 +14,7 @@ export const isAuth = async(req, res, next) => {
     const token = authHeader.split(' ')[1]
 
     jwt.verify(
-        token, 'asdfqwer1234!@#$', async (error, decoded) => {
+        token, 'abcdefg1234%^&*', async (error, decoded) => {
             if (error) {
                 console.log('토큰 에러')
                 return res.status(401).json(AUTH_ERROR)
