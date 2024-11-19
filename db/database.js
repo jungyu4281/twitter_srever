@@ -17,3 +17,4 @@ export function getUsers(){
 export function getTweets(){
     return db.collection('tweets')
 }
+
