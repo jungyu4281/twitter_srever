@@ -24,6 +24,7 @@
     "express-validator": "^7.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.10.0",
+    "mongoose": "^8.8.2",
     "mysql2": "^3.11.4",
     "sequelize": "^6.37.5",
     "socket.io": "^4.8.1"
