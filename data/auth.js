@@ -1,47 +1,21 @@
-import { sequelize } from '../db/database.js'
-import SQ from 'sequelize'
-
-const DataTypes = SQ.DataTypes
-
-export const User = sequelize.define( // user뒤에 자동으로 복수형이 들어가므로 없애준다
-    'user',
-    {
-        id:{
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            allowNull : true,
-            primaryKey: true
-        },
-        username: {
-            type: DataTypes.STRING(50),
-            allowNull: false
-        },
-        password: {
-            type: DataTypes.STRING(500),
-            allowNull: false
-        },
-        name:{
-            type: DataTypes.STRING(20),
-            allowNull: false
-        },
-        email:{
-            type: DataTypes.STRING(50),
-            allowNull: false
-        },
-        url: DataTypes.TEXT
-    },
-    { timestamps: false } // 모든 컬럼이 자동으로 들어가기에, timestamps를 비활성화 시킨다
-)
-
+import MongoDb from 'mongodb'
+import { getUsers } from '../db/database.js'
+const ObjectID = MongoDb.ObjectId
 
 export async function findByUsername(username){
-    return User.findOne({ where: { username }})
+    return getUsers().find({ username }).next().then(mapOptionalUser) //mapOptionalUser = 함수 및 콜백
 }
 
-export async function findById(id){
-    return User.findByPk(id)
+export async function findById(id) {
+    return getUsers().find({ _id: new ObjectID(id)})
+    .next()
+    .then(mapOptionalUser)
 }
 
-export async function createUser(user) {
-    return User.create(user).then((data) => data.dataValues.id)
+export async function createUser(user){
+    return getUsers().insertOne(user).then((result) => result.insertedId.toString())
+}
+
+function mapOptionalUser(user){ //user를 받아서
+    return user ? { ...user, id: user._id.toString()} : user // user 의 값이 존재한다면 :왼쪽 값 리턴, 그게아니라면 그냥 오른쪽 리턴
 }
